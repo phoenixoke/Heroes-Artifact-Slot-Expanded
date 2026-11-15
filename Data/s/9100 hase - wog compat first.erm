@@ -1,0 +1,58 @@
+ZVSE2
+** Heroes Artifact Slot Expanded - WoG compatibility, handlers that run BEFORE WoG's own (script priority 9100).
+** Read-only: the new slots are read through the plugin's ERM API (SN:F^Heroes_Artifact_Slot_Expanded:...^).
+
+** Espionage (WoG script 20, option 58): the enemy hero's artifact list includes the new slots.
+** Only when the hero has something in a new slot: this handler shows the whole list itself and skips WoG's
+** handler (SN:Q); otherwise WoG's own handler runs unchanged.
+!?FU(WOG_58_ShowEnemyHeroArtsEquip);
+!#VA(hero:x);
+
+!!SN:F^Heroes_Artifact_Slot_Expanded:EMS_SlotCount^;
+!!VR(n:y):Sv1;
+!!FU&(n)<=0:E;
+
+!!VR(last:y):S(n) -1;
+!!VR(has:y):S0;
+!!re i/0/(last);
+  !!SN:F^Heroes_Artifact_Slot_Expanded:EMS_GetArt^/(hero)/i;
+  !!VR(has)&v1>(NO_ART):S1;
+!!en;
+!!FU&(has)=0:E;
+
+!!VR(msg:z):Sz158068 +^%T(wog.endl)^;
+!!VR(counter:y):S0;
+
+!!re i/(ART_SLOT_EQUIPPED_FIRST)/(ART_SLOT_EQUIPPED_LAST);
+  !!HE(hero):A1/?(art:y)/i;
+  !!co|(art)<=(NO_ART)/(art)=(ART_ARTIFACT_LOCK);
+  !!VR(msg)&(counter)>0:+^%T(wog.comma)^;
+  !!VR(counter):+1;
+  !!SN:H^art^/(art)/0/?(name:z);
+  !!VR(msg):+^%(name)^;
+!!en;
+
+!!re i/0/(last);
+  !!SN:F^Heroes_Artifact_Slot_Expanded:EMS_GetArt^/(hero)/i;
+  !!VR(art):Sv1;
+  !!co&(art)<=(NO_ART);
+  !!VR(msg)&(counter)>0:+^%T(wog.comma)^;
+  !!VR(counter):+1;
+  !!SN:H^art^/(art)/0/?(name);
+  !!VR(msg):+^%(name)^;
+!!en;
+
+!!VR(msg):+^%T(wog.period)^;
+!!IF:M(msg);
+!!SN:Q;
+
+** Artificer (WoG script 52, option 26): Upgrade (FU160) and Exchange (FU167) dialogs read misc slots 1-5 only.
+** Before WoG's dialog, EMS lends new-slot artifacts the Artificer can work on to those native misc slots
+** (silent swap - both stay worn); the handler in "-9100 hase - wog compat after.erm" swaps them back.
+!?FU160;
+!!HE(CURRENT_HERO):N?(hid:y);
+!!SN:F^Heroes_Artifact_Slot_Expanded:EMS_ArtificerEnter^/(hid)/1;
+
+!?FU167;
+!!HE(CURRENT_HERO):N?(hid:y);
+!!SN:F^Heroes_Artifact_Slot_Expanded:EMS_ArtificerEnter^/(hid)/2;

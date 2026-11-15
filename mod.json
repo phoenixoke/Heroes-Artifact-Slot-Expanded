@@ -1,0 +1,30 @@
+{
+  "caption": {
+    "en_US": "Heroes Artifact Slot Expanded"
+  },
+  "description": {
+    "short": {
+      "en_US": "Heroes get 14 more artifact slots: 7 misc (12 in all), 4 rings, a second armour, weapon and necklace slot - each can be switched off. Artifacts in the new slots work exactly like in a normal slot (stats, abilities, Emerald/TUM/ACM equip effects, spells, combinations). Hero, meeting, merchant and altar screens, with or without Legend Heroes."
+    },
+    "full": {
+      "en_US": "Readme.md"
+    }
+  },
+  "author": "Sinistral",
+  "homepage": "https://github.com/phoenixoke/Heroes-Artifact-Slot-Expanded",
+  "mod_version": "1.0.4",
+  "platform": "era",
+  "info_version": "1.0",
+  "priority": 0,
+  "category": "gameplay",
+  "icon": {
+    "file": "heroes-artifact-slot-expanded.ico",
+    "index": 0
+  },
+  "compatibility": {
+    "load_after": [
+      "Legend-Heroes",
+      "ResOunD"
+    ]
+  }
+}

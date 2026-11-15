@@ -1,0 +1,80 @@
+ZVSE2
+** Heroes Artifact Slot Expanded - WoG compatibility, handlers that run AFTER WoG's own (script priority -9100).
+** Read-only: the new slots are read through the plugin's ERM API (SN:F^Heroes_Artifact_Slot_Expanded:...^).
+
+** Living Scrolls (WoG script 45, option 33): spell scrolls worn in the new misc slots count like those in misc
+** slots 1-5 (20% cast chance per valid scroll, 100% at most). Same trigger and conditions as WoG's handler.
+!?FU(OnSetupBattlefield)&i^wog_isNeutralBattle^;
+!!UN:P33/?(opt:y);
+!!FU&(opt)<>(TRUE):E;
+
+!!SN:F^Heroes_Artifact_Slot_Expanded:EMS_SlotCount^;
+!!VR(n:y):Sv1;
+!!FU&(n)<=0:E;
+!!VR(hero:y):Si^battle_hero_0^;
+!!FU&(hero)<0:E;
+
+!!VR(last:y):S(n) -1;
+!!FU(NewIntArray):P(n)/(NO_SPELL)/?(extra:y)/(M_TEMP);
+!!VR(found:y):S0;
+!!re i/0/(last);
+  !!SN:F^Heroes_Artifact_Slot_Expanded:EMS_GetArt^/(hero)/i;
+  !!co&v1<>(ART_SPELL_SCROLL);
+  !!SN:F^Heroes_Artifact_Slot_Expanded:EMS_GetMod^/(hero)/i;
+  !!VR(spell:y):Sv1;
+  !!FU(WOG_33_CheckSpellIsValid):P(spell)/?(valid:y);
+  !!co&(valid)=(FALSE);
+  !!SN:M(extra)/(found)/(spell);
+  !!VR(found):+1;
+!!en;
+!!FU&(found)=0:E;
+
+; WoG found no scroll in misc slots 1-5: it did not activate. Ask the same casting check WoG asks.
+!!if&i^WOG_33_activated^=(FALSE);
+  !!FU(WOG_Battle_CanCast):P(BATTLE_LEFT)/0/?i^WOG_33_activated^/(TRUE);
+  !!FU&i^WOG_33_activated^=(FALSE):E;
+  !!FU(NewIntArray):P(found)/(NO_SPELL)/?i^WOG_33_spells_array_ID^/(M_TEMP);
+  !!VR(have:y):S0;
+!!el;
+  !!SN:Mi^WOG_33_spells_array_ID^/?(have);
+!!en;
+
+!!VR(total:y):S(have) +(found);
+!!SN:Mi^WOG_33_spells_array_ID^/(total);
+!!VR(last):S(found) -1;
+!!re i/0/(last);
+  !!SN:M(extra)/i/?(spell);
+  !!VR(dest:y):S(have) +i;
+  !!SN:Mi^WOG_33_spells_array_ID^/(dest)/(spell);
+!!en;
+
+!!VRi^WOG_33_cast_chance^:S(total) *20;
+!!VRi^WOG_33_cast_chance^&i^WOG_33_cast_chance^>100:S100;
+
+** Adventure Cave (WoG script 48, option 30), ascetic hermit: "only for heroes without artifacts" also checks the
+** new slots. WoG's handler (FU776) said yes (v615 = 1) - take it back when a new slot is used.
+!?FU776;
+!!FU&v615<>1:E;
+!!SN:F^Heroes_Artifact_Slot_Expanded:EMS_SlotCount^;
+!!VR(n:y):Sv1;
+!!FU&(n)<=0:E;
+!!HE(CURRENT_HERO):N?(hid:y);
+!!VR(last:y):S(n) -1;
+!!VR(has:y):S0;
+!!re i/0/(last);
+  !!SN:F^Heroes_Artifact_Slot_Expanded:EMS_GetArt^/(hid)/i;
+  !!VR(has)&v1>(NO_ART):S1;
+!!en;
+!!if&(has)=1;
+  !!VRv615:S0;
+  !!IF:M1/z130242;
+!!en;
+
+** Artificer (WoG script 52): swap the lent artifacts back after WoG's Upgrade / Exchange dialog.
+!?FU160;
+!!HE(CURRENT_HERO):N?(hid:y);
+!!SN:F^Heroes_Artifact_Slot_Expanded:EMS_ArtificerLeave^/(hid);
+
+!?FU167;
+!!HE(CURRENT_HERO):N?(hid:y);
+!!SN:F^Heroes_Artifact_Slot_Expanded:EMS_ArtificerLeave^/(hid);
