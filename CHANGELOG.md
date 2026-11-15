@@ -1,3 +1,7 @@
+## 1.0.6 (261115-05) - portrait view flicker fix
+
+- Fix (user report 261115): with Legend Heroes in the portrait view, the hero's artifacts flickered over the portrait while the mouse was outside the hero screen. Another handler showed the hidden artifact pictures again on every mouse move, and HASE hid them again and redrew the screen. Now the artifact pictures of the hero screen are simply not drawn in the portrait view, whatever shows them, and the extra redraw is gone.
+
 ## 1.0.5 (261115-04) - readme layout for the Mod Browser
 
 - Readme laid out for the Heroes Launcher Mod Browser, which shows every line break of the file as a new line: each paragraph and bullet is one line now, long bullets are split into short sub-lists, and the ERM functions are a list instead of a code block. File names are in code quotes so they do not turn into web links. No change in play.

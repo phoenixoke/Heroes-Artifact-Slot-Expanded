@@ -1,4 +1,4 @@
-# Heroes Artifact Slot Expanded 1.0.5
+# Heroes Artifact Slot Expanded 1.0.6
 
 by Sinistral, co-authored by Claude
 
@@ -92,6 +92,10 @@ Call: `!!SN:F^Heroes_Artifact_Slot_Expanded:`
 ## CHANGES
 
 Full list: `CHANGELOG.md`
+
+**1.0.6**
+
+- Fix: with Legend Heroes in the portrait view, the artifacts no longer flicker over the portrait while the mouse is outside the hero screen.
 
 **1.0.5**
 
