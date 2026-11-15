@@ -1,3 +1,7 @@
+## 1.0.5 (261115-04) - readme layout for the Mod Browser
+
+- Readme laid out for the Heroes Launcher Mod Browser, which shows every line break of the file as a new line: each paragraph and bullet is one line now, long bullets are split into short sub-lists, and the ERM functions are a list instead of a code block. File names are in code quotes so they do not turn into web links. No change in play.
+
 ## 1.0.4 (261115-03) - Mod Browser release
 
 - Hero screen: the name-panel place of the view switch is used only when it is free. With igrik's 10SSkills the hero's specialty icon sits there (item 118 at 250,30) - the switch then goes into the doll (left of the helmet) instead of covering the icon.
