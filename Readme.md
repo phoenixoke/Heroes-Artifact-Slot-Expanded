@@ -1,4 +1,4 @@
-# Heroes Artifact Slot Expanded 1.0.6
+# Heroes Artifact Slot Expanded 1.0.7
 
 by Sinistral, co-authored by Claude
 
@@ -82,7 +82,7 @@ Call: `!!SN:F^Heroes_Artifact_Slot_Expanded:`
 - `EMS_FindArt/(hero)/(art)` - first new slot k holding that artifact, or -1.
 - `EMS_CountArt/(hero)/(art)` - how many new slots hold that artifact.
 
-`HE:A2`, `HE:A3` and `HE:F` (with /1) already include the new slots. Plugins can also use EMS_HeroScreenSlot, EMS_TakeArt and EMS_PutArt (stdcall exports).
+`HE:A2`, `HE:A3` and `HE:F` (with /1) already include the new slots. Plugins can also use EMS_HeroScreenSlot, EMS_TakeArt, EMS_PutArt and EMS_ParkedArt (stdcall exports).
 
 ## LIMITS
 
@@ -92,6 +92,10 @@ Call: `!!SN:F^Heroes_Artifact_Slot_Expanded:`
 ## CHANGES
 
 Full list: `CHANGELOG.md`
+
+**1.0.7**
+
+- For other plugins: new export EMS_ParkedArt tells which artifact of a normal slot is set aside while an artifact goes into or out of a new slot. No change in play.
 
 **1.0.6**
 

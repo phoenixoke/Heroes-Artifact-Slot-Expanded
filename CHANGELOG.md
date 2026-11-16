@@ -1,3 +1,7 @@
+## 1.0.7 (261116-01) - parked-artifact export for plugins
+
+- New stdcall export `EMS_ParkedArt(hero, slot)`: while an artifact goes into or out of a new slot (equip, unequip, Altar of Sacrifice, Artifact Merchant) it passes through a normal slot of the same kind, and the artifact that normally sits there is set aside meanwhile. The export returns that set-aside artifact (or -1), so another plugin's equip-event handler knows the hero still has it. No change in play.
+
 ## 1.0.6 (261115-05) - portrait view flicker fix
 
 - Fix (user report 261115): with Legend Heroes in the portrait view, the hero's artifacts flickered over the portrait while the mouse was outside the hero screen. Another handler showed the hidden artifact pictures again on every mouse move, and HASE hid them again and redrew the screen. Now the artifact pictures of the hero screen are simply not drawn in the portrait view, whatever shows them, and the extra redraw is gone.
